@@ -31,18 +31,7 @@ func (lawn *lawn) parseInput(input io.Reader) (err error) {
 	var mowerPosition string
 	for scanner.Scan() {
 		if line == 0 {
-			lawnSize := strings.Split(scanner.Text(), " ")
-			if len(lawnSize) != 2 {
-				return errors.New("could not parse lawn size line")
-			}
-			lawnWidth := lawnSize[0]
-			lawnHeight := lawnSize[1]
-
-			lawn.width, err = strconv.Atoi(lawnWidth)
-			if err != nil {
-				return err
-			}
-			lawn.height, err = strconv.Atoi(lawnHeight)
+			err := lawn.parseLawnSize(scanner.Text())
 			if err != nil {
 				return err
 			}
@@ -80,5 +69,24 @@ func (lawn *lawn) parseInput(input io.Reader) (err error) {
 		line++
 	}
 
+	return nil
+}
+
+func (lawn *lawn) parseLawnSize(line string) (err error) {
+	lawnSize := strings.Split(line, " ")
+	if len(lawnSize) != 2 {
+		return errors.New("could not parse lawn size line")
+	}
+	lawnWidth := lawnSize[0]
+	lawnHeight := lawnSize[1]
+
+	lawn.width, err = strconv.Atoi(lawnWidth)
+	if err != nil {
+		return err
+	}
+	lawn.height, err = strconv.Atoi(lawnHeight)
+	if err != nil {
+		return err
+	}
 	return nil
 }

@@ -91,3 +91,15 @@ func TestMow(t *testing.T) {
 		}
 	}
 }
+
+func TestParseLawnSize(t *testing.T) {
+	lawn := lawn{}
+	wrongInputs := []string{"5 5 5", "5 X", "X 5"}
+	for _, input := range wrongInputs {
+		err := lawn.parseLawnSize(input)
+		if err == nil {
+			t.Errorf("parseLawnSize did not throw an error with wrong input: %s", input)
+		}
+	}
+
+}
