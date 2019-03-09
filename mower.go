@@ -11,7 +11,7 @@ type mower struct {
 func (mower *mower) moveForward(lawn lawn) {
 	switch mower.orientation {
 	case "N":
-		if mower.yPos+1 > lawn.size {
+		if mower.yPos+1 > lawn.height {
 			break
 		}
 		mower.yPos++
@@ -26,7 +26,7 @@ func (mower *mower) moveForward(lawn lawn) {
 		}
 		mower.xPos--
 	case "E":
-		if mower.xPos+1 > lawn.size {
+		if mower.xPos+1 > lawn.width {
 			break
 		}
 		mower.xPos++

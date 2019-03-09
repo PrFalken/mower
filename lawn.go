@@ -9,8 +9,8 @@ import (
 )
 
 type lawn struct {
-	size   int
-	mowers []*mower
+	height, width int
+	mowers        []*mower
 }
 
 func (lawn *lawn) mow() {
@@ -31,8 +31,18 @@ func (lawn *lawn) parseInput(input io.Reader) (err error) {
 	var mowerPosition string
 	for scanner.Scan() {
 		if line == 0 {
-			lawnSize := strings.Split(scanner.Text(), " ")[0]
-			lawn.size, err = strconv.Atoi(lawnSize)
+			lawnSize := strings.Split(scanner.Text(), " ")
+			if len(lawnSize) != 2 {
+				return errors.New("could not parse lawn size line")
+			}
+			lawnWidth := lawnSize[0]
+			lawnHeight := lawnSize[1]
+
+			lawn.width, err = strconv.Atoi(lawnWidth)
+			if err != nil {
+				return err
+			}
+			lawn.height, err = strconv.Atoi(lawnHeight)
 			if err != nil {
 				return err
 			}

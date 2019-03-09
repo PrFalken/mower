@@ -36,7 +36,8 @@ func TestTurn(t *testing.T) {
 
 func TestMoveForward(t *testing.T) {
 	lawn := lawn{
-		size: 5,
+		width:  5,
+		height: 7,
 		mowers: []*mower{&mower{
 			orientation: "E",
 			xPos:        5,
@@ -47,6 +48,17 @@ func TestMoveForward(t *testing.T) {
 	lawn.mowers[0].moveForward(lawn)
 	fmt.Println(lawn.mowers[0].xPos)
 	if lawn.mowers[0].xPos != 5 {
+		t.Fatal("instruction out of the lawn but mower still moved forward")
+	}
+
+	lawn.mowers[0] = &mower{
+		orientation: "N",
+		xPos:        5,
+		yPos:        7,
+	}
+
+	lawn.mowers[0].moveForward(lawn)
+	if lawn.mowers[0].yPos != 7 {
 		t.Fatal("instruction out of the lawn but mower still moved forward")
 	}
 }

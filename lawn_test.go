@@ -52,7 +52,8 @@ LFLFLFLFF
 FFRFFRFRRF
 `
 	expectedLawn := lawn{
-		size: 5,
+		width:  5,
+		height: 5,
 		mowers: []*mower{&mower{
 			orientation:  "N",
 			xPos:         1,
@@ -74,18 +75,19 @@ FFRFFRFRRF
 
 func TestMow(t *testing.T) {
 	lawn := lawn{
-		size: 5,
+		width:  5,
+		height: 6,
 		mowers: []*mower{&mower{
 			orientation:  "N",
 			xPos:         1,
 			yPos:         2,
-			instructions: []string{"L", "F", "L", "F", "L", "F", "L", "F", "F"},
+			instructions: []string{"F", "F", "F", "F", "F", "F", "F", "F"},
 		},
 		},
 	}
 	lawn.mow()
 	mower := lawn.mowers[0]
-	if mower.xPos != 1 || mower.yPos != 3 || mower.orientation != "N" {
+	if mower.xPos != 1 || mower.yPos != 6 || mower.orientation != "N" {
 		t.Fatalf("Wrong final position/orientation, expected 1 3 N, got %v %v %s", mower.xPos, mower.yPos, mower.orientation)
 	}
 }
