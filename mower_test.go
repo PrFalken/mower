@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -46,7 +45,6 @@ func TestMoveForward(t *testing.T) {
 		},
 	}
 	lawn.mowers[0].moveForward(lawn)
-	fmt.Println(lawn.mowers[0].xPos)
 	if lawn.mowers[0].xPos != 5 {
 		t.Fatal("instruction out of the lawn but mower still moved forward")
 	}
