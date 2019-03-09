@@ -54,9 +54,29 @@ func TestMoveForward(t *testing.T) {
 		xPos:        5,
 		yPos:        7,
 	}
-
 	lawn.mowers[0].moveForward(lawn)
 	if lawn.mowers[0].yPos != 7 {
 		t.Fatal("instruction out of the lawn but mower still moved forward")
 	}
+
+	lawn.mowers[0] = &mower{
+		orientation: "S",
+		xPos:        5,
+		yPos:        0,
+	}
+	lawn.mowers[0].moveForward(lawn)
+	if lawn.mowers[0].yPos != 0 {
+		t.Fatal("instruction out of the lawn but mower still moved forward")
+	}
+
+	lawn.mowers[0] = &mower{
+		orientation: "W",
+		xPos:        0,
+		yPos:        0,
+	}
+	lawn.mowers[0].moveForward(lawn)
+	if lawn.mowers[0].xPos != 0 {
+		t.Fatal("instruction out of the lawn but mower still moved forward")
+	}
+
 }
