@@ -9,6 +9,13 @@ type mower struct {
 }
 
 func (mower *mower) conflictPosition(lawn *lawn, nextX, nextY int) bool {
+	if nextY < 0 || nextY > lawn.height {
+		return true
+	}
+	if nextX < 0 || nextX > lawn.width {
+		return true
+	}
+
 	for _, otherMower := range lawn.mowers {
 		if otherMower.xPos == nextX && otherMower.yPos == nextY {
 			return true
@@ -23,15 +30,9 @@ func (mower *mower) moveForward(lawn lawn) {
 		if mower.conflictPosition(&lawn, mower.xPos, mower.yPos+1) {
 			break
 		}
-		if mower.yPos+1 > lawn.height {
-			break
-		}
 		mower.yPos++
 	case "S":
 		if mower.conflictPosition(&lawn, mower.xPos, mower.yPos-1) {
-			break
-		}
-		if mower.yPos-1 < 0 {
 			break
 		}
 		mower.yPos--
@@ -39,15 +40,9 @@ func (mower *mower) moveForward(lawn lawn) {
 		if mower.conflictPosition(&lawn, mower.xPos-1, mower.yPos) {
 			break
 		}
-		if mower.xPos-1 < 0 {
-			break
-		}
 		mower.xPos--
 	case "E":
 		if mower.conflictPosition(&lawn, mower.xPos+1, mower.yPos) {
-			break
-		}
-		if mower.xPos+1 > lawn.width {
 			break
 		}
 		mower.xPos++
