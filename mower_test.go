@@ -33,6 +33,8 @@ func TestTurn(t *testing.T) {
 	}
 }
 
+const outOfBoundsError = "instruction out of the lawn but mower still moved forward"
+
 func TestMoveForward(t *testing.T) {
 	lawn := lawn{
 		width:  5,
@@ -46,7 +48,7 @@ func TestMoveForward(t *testing.T) {
 	}
 	lawn.mowers[0].moveForward(lawn)
 	if lawn.mowers[0].xPos != 5 {
-		t.Fatal("instruction out of the lawn but mower still moved forward")
+		t.Fatal(outOfBoundsError)
 	}
 
 	lawn.mowers[0] = &mower{
@@ -56,7 +58,7 @@ func TestMoveForward(t *testing.T) {
 	}
 	lawn.mowers[0].moveForward(lawn)
 	if lawn.mowers[0].yPos != 7 {
-		t.Fatal("instruction out of the lawn but mower still moved forward")
+		t.Fatal(outOfBoundsError)
 	}
 
 	lawn.mowers[0] = &mower{
@@ -66,7 +68,7 @@ func TestMoveForward(t *testing.T) {
 	}
 	lawn.mowers[0].moveForward(lawn)
 	if lawn.mowers[0].yPos != 0 {
-		t.Fatal("instruction out of the lawn but mower still moved forward")
+		t.Fatal(outOfBoundsError)
 	}
 
 	lawn.mowers[0] = &mower{
@@ -76,7 +78,7 @@ func TestMoveForward(t *testing.T) {
 	}
 	lawn.mowers[0].moveForward(lawn)
 	if lawn.mowers[0].xPos != 0 {
-		t.Fatal("instruction out of the lawn but mower still moved forward")
+		t.Fatal(outOfBoundsError)
 	}
 
 }

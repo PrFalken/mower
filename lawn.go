@@ -25,6 +25,33 @@ func (lawn *lawn) mow() {
 	}
 }
 
+func newMower(mowerPosition, instructions string) (*mower, error) {
+	pos := strings.Split(mowerPosition, " ")
+	if len(pos) != 3 {
+		return nil, errors.New("could not parse mower position")
+	}
+
+	xPos, err := strconv.Atoi(pos[0])
+	if err != nil {
+		return nil, err
+	}
+
+	yPos, err := strconv.Atoi(pos[1])
+	if err != nil {
+		return nil, err
+	}
+
+	orientation := pos[2]
+
+	newMower := mower{xPos: xPos, yPos: yPos, orientation: orientation}
+	for _, instruction := range strings.Split(instructions, "") {
+		newMower.instructions = append(newMower.instructions, instruction)
+	}
+
+	return &newMower, nil
+
+}
+
 func (lawn *lawn) parseInput(input io.Reader) (err error) {
 	scanner := bufio.NewScanner(input)
 	line := 0
@@ -43,29 +70,13 @@ func (lawn *lawn) parseInput(input io.Reader) (err error) {
 			mowerPosition = scanner.Text()
 			continue
 		}
-		pos := strings.Split(mowerPosition, " ")
-		if len(pos) != 3 {
-			return errors.New("could not parse mower position")
-		}
 
-		xPos, err := strconv.Atoi(pos[0])
+		newMower, err := newMower(mowerPosition, scanner.Text())
 		if err != nil {
 			return err
 		}
-
-		yPos, err := strconv.Atoi(pos[1])
-		if err != nil {
-			return err
-		}
-
-		orientation := pos[2]
-
-		newMower := mower{xPos: xPos, yPos: yPos, orientation: orientation}
+		lawn.mowers = append(lawn.mowers, newMower)
 		mowerPosition = ""
-		for _, instruction := range strings.Split(scanner.Text(), "") {
-			newMower.instructions = append(newMower.instructions, instruction)
-		}
-		lawn.mowers = append(lawn.mowers, &newMower)
 		line++
 	}
 

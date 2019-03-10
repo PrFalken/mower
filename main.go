@@ -26,9 +26,7 @@ func main() {
 
 	if *doAPI {
 		router := mux.NewRouter()
-		router.HandleFunc("/", handleMowerJob).Methods("POST")
-		router.HandleFunc("/", hello).Methods("GET")
-
+		router.HandleFunc("/", handleMowerAPI).Methods("POST")
 		log.Fatal(http.ListenAndServe(":8000", router))
 	}
 
@@ -40,11 +38,7 @@ type instructions struct {
 	Commands string `json:"commands,omitempty"`
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hello!"))
-}
-
-func handleMowerJob(w http.ResponseWriter, r *http.Request) {
+func handleMowerAPI(w http.ResponseWriter, r *http.Request) {
 
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -73,6 +67,7 @@ func handleFile(f string) {
 		log.Fatal(err)
 	}
 	defer file.Close()
+
 	output, err := executeMowers(file)
 	if err != nil {
 		log.Fatal(err)

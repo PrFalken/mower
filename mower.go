@@ -8,6 +8,15 @@ type mower struct {
 	instructions []string
 }
 
+func (mower *mower) conflictPosition(lawn *lawn, nextX, nextY int) bool {
+	for _, otherMower := range lawn.mowers {
+		if otherMower.xPos == nextX && otherMower.yPos == nextY {
+			return true
+		}
+	}
+	return false
+}
+
 func (mower *mower) moveForward(lawn lawn) {
 	switch mower.orientation {
 	case "N":
@@ -44,15 +53,6 @@ func (mower *mower) moveForward(lawn lawn) {
 		mower.xPos++
 
 	}
-}
-
-func (mower *mower) conflictPosition(lawn *lawn, nextX, nextY int) bool {
-	for _, otherMower := range lawn.mowers {
-		if otherMower.xPos == nextX && otherMower.yPos == nextY {
-			return true
-		}
-	}
-	return false
 }
 
 func (mower *mower) turn(instruction string) {
